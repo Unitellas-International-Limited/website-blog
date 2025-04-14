@@ -1,16 +1,25 @@
 import { NextResponse } from "next/server";
 
+let cachedAccessToken: string | null = null;
+let tokenExpiryTime = 0;
+
 async function getAccessToken() {
-  const res = await fetch(`${process.env.ZOHO_ACCOUNT_URL}/oauth/v2/token`, {
+  const now = Date.now();
+
+  if (cachedAccessToken && now < tokenExpiryTime) {
+    return cachedAccessToken;
+  }
+
+  const res = await fetch(`https://accounts.zoho.com/oauth/v2/token`, {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
     body: new URLSearchParams({
-      refresh_token: process.env.ZOHO_REFRESH_TOKEN as string,
-      client_id: process.env.ZOHO_CLIENT_ID as string,
-      client_secret: process.env.ZOHO_CLIENT_SECRET as string,
-      redirect_uri: "http:localhost:3000",
+      refresh_token: process.env.ZOHO_CREATOR_REFRESH_TOKEN as string,
+      client_id: process.env.NEXT_PUBLIC_ZOHO_CREATOR_CLIENT_ID as string,
+      client_secret: process.env.ZOHO_CREATOR_CLIENT_SECRET as string,
+      redirect_uri: "http://localhost:3000",
       grant_type: "refresh_token",
     }),
   });
@@ -22,15 +31,18 @@ async function getAccessToken() {
     throw new Error("Failed to get access token from Zoho");
   }
 
-  return data.access_token;
+  cachedAccessToken = data.access_token;
+  tokenExpiryTime = now + data.expires_in * 1000;
+
+  return cachedAccessToken;
 }
 
 export async function GET() {
-  const access_token = await getAccessToken();
-
   try {
+    const access_token = await getAccessToken();
+
     const response = await fetch(
-      `https://creatorapp.zoho.com/api/v2/sharon-unitellas/unitellas-blog-backend/report/Posts`,
+      `https://creatorapp.zoho.com/api/v2/apps_unitellas/unitellas-blog-backend/report/All_Blog_Posts`,
       {
         method: "GET",
         headers: {
@@ -45,7 +57,7 @@ export async function GET() {
       throw new Error("Error fetching Zoho Creator posts");
     }
 
-    return NextResponse.json(data.data);
+    return NextResponse.json(data);
   } catch (error) {
     console.error("Error fetching posts:", error);
     return NextResponse.json(

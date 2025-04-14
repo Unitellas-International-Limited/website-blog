@@ -1,14 +1,14 @@
-import React from "react";
-// import {MagnifyingGlassIcon} from '@heroicons/react/24/solid'
+"use client";
+import { Search } from "lucide-react";
 
-const Search = () => {
+const SearchBar = () => {
   return (
     <div className="flex justify-center">
       <div className="w-full max-w-[70%] rounded-xl p-3 text-sm flex gap-4 my-4 shadow-sm">
-        {/* <MagnifyingGlassIcon className='w-5 h-5'/> */}
+        <Search size={20} />
         <input
           type="text"
-          placeholder="Search"
+          placeholder="Search for blog posts using their title..."
           className="w-full outline-none"
         />
       </div>
@@ -16,4 +16,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default SearchBar;
