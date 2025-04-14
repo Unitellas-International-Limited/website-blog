@@ -4,9 +4,13 @@ import React from "react";
 const Search = () => {
   return (
     <div className="flex justify-center">
-      <div className="border w-[14rem] px-1 py-1 text-sm flex gap-4">
+      <div className="w-full max-w-[70%] rounded-xl p-3 text-sm flex gap-4 my-4 shadow-sm">
         {/* <MagnifyingGlassIcon className='w-5 h-5'/> */}
-        <input type="text" placeholder="Search" className="outline-none" />
+        <input
+          type="text"
+          placeholder="Search"
+          className="w-full outline-none"
+        />
       </div>
     </div>
   );
