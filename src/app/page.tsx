@@ -6,23 +6,26 @@ import Search from "@/components/searchBar";
 import BlogCard from "@/components/blogCard";
 
 interface Post {
-  id: string;
-  name: string;
-  content: string;
-  image: string;
+  ID: string;
+  Title: string;
+  Content: string;
+  Image: string;
 }
-interface BlogProps {
-  posts: Post[];
-}
-const Blog: React.FC<BlogProps> = () => {
+
+const Blog: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
+  // const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getPosts = async () => {
       const res = await fetch("/api/fetch-posts");
       const data = await res.json();
       console.log(data);
-      setPosts(data.data || []);
+      if (res.ok && data.data) {
+        setPosts(data.data); // Only set the posts if data.data is available
+      } else {
+        console.error("Error fetching posts: ", data);
+      }
     };
 
     getPosts();
@@ -45,11 +48,11 @@ const Blog: React.FC<BlogProps> = () => {
           </p>
         ) : (
           posts.map((post) => (
-            <div key={post.id}>
+            <div key={post.ID}>
               <BlogCard
-                name={post.name}
-                content={post.content}
-                image={post.image}
+                name={post.Title}
+                content={post.Content}
+                image={post.Image}
               />
             </div>
           ))
