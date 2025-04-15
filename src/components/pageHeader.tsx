@@ -11,7 +11,7 @@ export default function PageHeader({ title, subtitles }: PageHeaderProps) {
   return (
     <section
       className={
-        "relative flex h-80 flex-col items-center justify-center overflow-hidden bg-gray-900 p-4"
+        "flex h-80 flex-col items-center justify-center overflow-hidden w-full bg-gray-900 p-4"
       }
     >
       <Image src={Icon} alt="Unitellas Icon" className="object-contain" />

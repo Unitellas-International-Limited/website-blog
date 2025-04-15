@@ -1,15 +1,22 @@
 "use client";
 import { Search } from "lucide-react";
 
-const SearchBar = () => {
+interface SearchBarProps {
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({ value, onChange }) => {
   return (
     <div className="flex justify-center">
-      <div className="w-full max-w-[70%] rounded-xl p-3 text-sm flex gap-4 my-4 shadow-sm">
+      <div className="w-full max-w-[80%] rounded-xl p-3 text-sm flex gap-4 my-4 shadow-sm hover:shadow-[#3caaee]">
         <Search size={20} />
         <input
           type="text"
-          placeholder="Search for blog posts using their title..."
+          placeholder="Search using title..."
           className="w-full outline-none"
+          value={value}
+          onChange={onChange}
         />
       </div>
     </div>
