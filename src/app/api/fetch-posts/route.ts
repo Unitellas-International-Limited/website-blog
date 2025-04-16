@@ -17,9 +17,9 @@ async function getAccessToken() {
     },
     body: new URLSearchParams({
       refresh_token: process.env.ZOHO_CREATOR_REFRESH_TOKEN as string,
-      client_id: process.env.NEXT_PUBLIC_ZOHO_CREATOR_CLIENT_ID as string,
+      client_id: process.env.ZOHO_CREATOR_CLIENT_ID as string,
       client_secret: process.env.ZOHO_CREATOR_CLIENT_SECRET as string,
-      redirect_uri: "http://localhost:3000",
+      redirect_uri: "https://unitellasblog.vercel.app",
       grant_type: "refresh_token",
     }),
   });

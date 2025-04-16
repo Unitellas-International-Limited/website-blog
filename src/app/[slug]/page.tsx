@@ -52,7 +52,6 @@ export default function BlogPostPage() {
         <div className="font-main text-3xl text-center">Getting Blog...</div>
       ) : post ? (
         <>
-          {" "}
           <PageHeader
             title={post.Blog_Title}
             subtitles={[`Author: ${post.Author}`]}
@@ -60,23 +59,33 @@ export default function BlogPostPage() {
           <p className="text-right text-xs font-bold px-3 py-1">
             Published on {post.Date_Published}
           </p>
-          <div className="flex flex-col space-y-5 px-10 pt-2 pb-4">
+
+          <div className="max-w-screen-xl space-y-9 mx-auto p-5">
             {/* top */}
-            <p className="text-md font-light mx-auto mt-7 ">
+            <p className="text-md font-light mx-auto mt-7">
               {post.Blog_Content_Paragraph_1}
             </p>
 
             {/* middle */}
-            <div className="flex flex-col sm:flex-row gap-5">
-              {" "}
-              <Image src="" alt="" className="object-cover w-full h-auto" />
-              <p className="text-md font-light mx-auto mt-7 ">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div className="relative w-full h-72 md:h-full">
+                <Image
+                  src={`/api/display-image?image=${encodeURIComponent(
+                    post.Blog_Image
+                  )}`}
+                  alt={post.Blog_Title}
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-lg"
+                />
+              </div>
+
+              <p className="text-md font-light mx-auto mt-7">
                 {post.Blog_Content_Paragraph_2}
               </p>
             </div>
 
-            {/* bottom */}
-            <p className="text-md font-light mx-auto mt-7 ">
+            <p className="text-md font-light mx-auto mt-7">
               {post.Blog_Content_Paragraph_3}
             </p>
           </div>

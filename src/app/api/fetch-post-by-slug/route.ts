@@ -29,9 +29,9 @@ async function getAccessToken() {
     },
     body: new URLSearchParams({
       refresh_token: process.env.ZOHO_CREATOR_REFRESH_TOKEN as string,
-      client_id: process.env.NEXT_PUBLIC_ZOHO_CREATOR_CLIENT_ID as string,
+      client_id: process.env.ZOHO_CREATOR_CLIENT_ID as string,
       client_secret: process.env.ZOHO_CREATOR_CLIENT_SECRET as string,
-      redirect_uri: "http://localhost:3000",
+      redirect_uri: "https://unitellasblog.vercel.app",
       grant_type: "refresh_token",
     }),
   });
@@ -45,7 +45,7 @@ async function getAccessToken() {
 
   cachedAccessToken = data.access_token;
   tokenExpiryTime = now + data.expires_in * 1000;
-
+  console.log(cachedAccessToken);
   return cachedAccessToken;
 }
 
@@ -80,6 +80,7 @@ export async function GET(req: Request) {
     }
 
     const access_token = await getAccessToken();
+    console.log(access_token);
 
     const postsResponse = await fetch(
       `https://creatorapp.zoho.com/api/v2/apps_unitellas/unitellas-blog-backend/report/All_Blog_Posts`,
@@ -94,13 +95,12 @@ export async function GET(req: Request) {
 
     if (!postsResponse.ok || !postsData.data) {
       return NextResponse.json(
-        { error: "Failed to fetch posts list" },
+        { error: "Failed to fetch post" },
         { status: 500 }
       );
     }
 
     const post = postsData.data.find((p: Post) => p.Url_SEO === slug);
-    console.log("Specific post by ID", post.ID);
 
     if (!post) {
       return NextResponse.json({ error: "Post not found" }, { status: 404 });

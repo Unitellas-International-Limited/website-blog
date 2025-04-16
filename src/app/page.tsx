@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import PageHeader from "@/components/pageHeader";
 import SearchBar from "@/components/searchBar";
 import Link from "next/link";
+import Image from "next/image";
 interface Post {
   ID: string;
   Blog_Title: string;
@@ -21,6 +22,11 @@ const Blog: React.FC = () => {
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
+  const [imgLoaded, setImgLoaded] = useState<{ [key: number]: boolean }>({});
+
+  const handleImageLoad = (index: number) => {
+    setImgLoaded((prev) => ({ ...prev, [index]: true }));
+  };
 
   useEffect(() => {
     const getPosts = async () => {
@@ -84,31 +90,51 @@ const Blog: React.FC = () => {
           </p>
         ) : (
           <div className=" flex flex-wrap justify-center gap-6 px-2">
-            {filteredPosts.map((post) => (
+            {filteredPosts.map((post, index) => (
               <Link key={post.ID} href={`/${post.Url_SEO}`} passHref>
                 <div className="w-[90%] md:w-[400px] max-w-[400px] pb-2 rounded-2xl cursor-pointer shadow-md shadow-gray-600 transform transition-transform duration-300 hover:-translate-y-2">
                   <div className="relative w-full h-64 rounded-t-2xl overflow-hidden">
-                    {/* <Image
-                    src={`https://creatorapp.zoho.com${image}`}
-                    alt={name}
-                    fill
-                    className="object-cover"
-                  /> */}
+                    <Image
+                      src={`/api/display-image?image=${encodeURIComponent(
+                        post.Blog_Image
+                      )}`}
+                      alt={post.Blog_Title}
+                      fill
+                      className="object-cover transition-opacity duration-700"
+                      unoptimized
+                      onLoad={() => handleImageLoad(index)}
+                    />
+                    {!imgLoaded[index] && (
+                      <div className="absolute inset-0 bg-gray-300 animate-pulse z-0">
+                        <Image
+                          src="/assets/images/unitellasicon.png"
+                          alt={post.Blog_Title}
+                          width={200}
+                          height={150}
+                        />
+                      </div>
+                    )}
                   </div>
-                  <p className="text-center font-main text-2xl pt-2">
+                  <p className="text-center font-main text-3xl pt-2">
                     {post.Blog_Title}
                   </p>
-                  <p className="pb-4 text-sm text-center capitalize font-medium">
+                  <p className="pb-4 text-sm text-[var(--color-primary)]/85 text-center capitalize font-medium">
                     {post.Date_Published}
                   </p>
 
                   {/* content preview */}
-                  <p className="truncate px-3 py-5">
+                  <p className="truncate-multiline max-h-[4.5rem] sm:max-h-[5.5rem] md:max-h-[6rem] lg:max-h-[7rem] overflow-hidden line-clamp-3 mx-4 mb-5">
                     {post.Blog_Content_Paragraph_1}
                   </p>
 
                   {/* bottom */}
-                  <div className="flex items-center w-full px-2">
+                  <div className="flex items-center w-full px-3">
+                    <Image
+                      src={"/assets/images/unitellasicon.png"}
+                      alt="Unitellas Icon"
+                      width={40}
+                      height={40}
+                    />
                     <p className="ml-auto mx-1 text-sm">By {post.Author}</p>
                   </div>
                 </div>
