@@ -28,10 +28,10 @@ async function getAccessToken() {
       "Content-Type": "application/x-www-form-urlencoded",
     },
     body: new URLSearchParams({
-      refresh_token: process.env.ZOHO_CREATOR_REFRESH_TOKEN as string,
-      client_id: process.env.ZOHO_CREATOR_CLIENT_ID as string,
-      client_secret: process.env.ZOHO_CREATOR_CLIENT_SECRET as string,
-      redirect_uri: "https://unitellasblog.vercel.app",
+      refresh_token: process.env.ZOHO_CREATOR_REFRESH_TOKEN!,
+      client_id: process.env.ZOHO_CREATOR_CLIENT_ID!,
+      client_secret: process.env.ZOHO_CREATOR_CLIENT_SECRET!,
+      redirect_uri: "https://blog.unitellas.com.ng",
       grant_type: "refresh_token",
     }),
   });

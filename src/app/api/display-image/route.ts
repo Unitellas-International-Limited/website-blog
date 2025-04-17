@@ -19,7 +19,7 @@ async function getAccessToken() {
       refresh_token: process.env.ZOHO_CREATOR_REFRESH_TOKEN!,
       client_id: process.env.ZOHO_CREATOR_CLIENT_ID!,
       client_secret: process.env.ZOHO_CREATOR_CLIENT_SECRET!,
-      redirect_uri: "https://unitellasblog.vercel.app",
+      redirect_uri: "https://blog.unitellas.com.ng",
       grant_type: "refresh_token",
     }),
   });

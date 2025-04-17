@@ -89,10 +89,10 @@ const Blog: React.FC = () => {
             at the moment.
           </p>
         ) : (
-          <div className=" flex flex-wrap justify-center gap-6 px-2">
+          <div className=" flex flex-wrap justify-center gap-8 px-3 mb-5">
             {filteredPosts.map((post, index) => (
               <Link key={post.ID} href={`/${post.Url_SEO}`} passHref>
-                <div className="w-[90%] md:w-[400px] max-w-[400px] pb-2 rounded-2xl cursor-pointer shadow-md shadow-gray-600 transform transition-transform duration-300 hover:-translate-y-2">
+                <div className=" md:w-[400px] max-w-[400px] pb-2 rounded-2xl cursor-pointer shadow-md shadow-gray-600 transform transition-transform duration-300 hover:-translate-y-2">
                   <div className="relative w-full h-64 rounded-t-2xl overflow-hidden">
                     <Image
                       src={`/api/display-image?image=${encodeURIComponent(
@@ -100,30 +100,31 @@ const Blog: React.FC = () => {
                       )}`}
                       alt={post.Blog_Title}
                       fill
-                      className="object-cover transition-opacity duration-700"
+                      className="object-cover transition-opacity duration-100"
                       unoptimized
                       onLoad={() => handleImageLoad(index)}
                     />
                     {!imgLoaded[index] && (
-                      <div className="absolute inset-0 bg-gray-300 animate-pulse z-0">
+                      <div className="absolute inset-0 bg-gray-300 animate-pulse z-0 flex justify-center items-center">
                         <Image
                           src="/assets/images/unitellasicon.png"
                           alt={post.Blog_Title}
-                          width={200}
-                          height={150}
+                          className="block"
+                          width={100}
+                          height={100}
                         />
                       </div>
                     )}
                   </div>
-                  <p className="text-center font-main text-3xl pt-2">
+                  <p className="text-center font-main text-3xl pt-2 px-2">
                     {post.Blog_Title}
                   </p>
-                  <p className="pb-4 text-sm text-[var(--color-primary)]/85 text-center capitalize font-medium">
+                  <p className="pb-4 text-sm text-[var(--color-primary)]/90 text-center capitalize font-medium">
                     {post.Date_Published}
                   </p>
 
                   {/* content preview */}
-                  <p className="truncate-multiline max-h-[4.5rem] sm:max-h-[5.5rem] md:max-h-[6rem] lg:max-h-[7rem] overflow-hidden line-clamp-3 mx-4 mb-5">
+                  <p className="truncate-multiline max-h-[4.5rem] sm:max-h-[5.5rem] md:max-h-[6rem] lg:max-h-[7rem] overflow-hidden line-clamp-3 mx-4 mb-7">
                     {post.Blog_Content_Paragraph_1}
                   </p>
 
@@ -135,7 +136,9 @@ const Blog: React.FC = () => {
                       width={40}
                       height={40}
                     />
-                    <p className="ml-auto mx-1 text-sm">By {post.Author}</p>
+                    <p className="ml-auto mx-1 text-sm font-medium">
+                      By {post.Author}
+                    </p>
                   </div>
                 </div>
               </Link>

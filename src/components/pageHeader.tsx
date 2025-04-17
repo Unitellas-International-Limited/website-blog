@@ -22,7 +22,7 @@ export default function PageHeader({ title, subtitles }: PageHeaderProps) {
 
       {subtitles.map((subtitle, index) => (
         <div key={index}>
-          <p className="text-xl my-1 max-w-5xl text-center sm:text-3xl font-main text-white">
+          <p className="text-xl mt-1 mb-2 max-w-5xl text-center sm:text-3xl font-main text-white">
             {subtitle}
           </p>
         </div>
