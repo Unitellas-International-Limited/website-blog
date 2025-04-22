@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 let cachedAccessToken: string | null = null;
 let tokenExpiryTime = 0;
 
-// Function to get Zoho access token
 async function getAccessToken() {
   const now = Date.now();
 
@@ -31,46 +30,41 @@ async function getAccessToken() {
   return cachedAccessToken;
 }
 
-// GET handler for video
 export async function GET(req: NextRequest) {
   const rawVideo = req.nextUrl.searchParams.get("video");
 
   if (!rawVideo) {
-    return NextResponse.json({ error: "Missing video param" }, { status: 400 });
+    return NextResponse.json({ error: "Missing  param" }, { status: 400 });
   }
 
+  const video = rawVideo;
+  console.log(video);
   const access_token = await getAccessToken();
-  const zohoVideoUrl = `https://creatorapp.zoho.com${rawVideo}`;
+  const zohoVideoUrl = `https://creatorapp.zoho.com${video}`;
 
-  const headers: Record<string, string> = {
-    Authorization: `Zoho-oauthtoken ${access_token}`,
-  };
+  const response = await fetch(zohoVideoUrl, {
+    headers: {
+      Authorization: `Zoho-oauthtoken ${access_token}`,
+    },
+  });
 
-  const zohoRes = await fetch(zohoVideoUrl, { headers });
+  const contentType = response.headers.get("Content-Type") || "";
 
-  const contentType = zohoRes.headers.get("Content-Type") || "";
-  const contentLength = zohoRes.headers.get("Content-Length");
-
-  if (!zohoRes.ok || !contentType.startsWith("video")) {
-    const errorText = await zohoRes.text();
-    console.error("Zoho returned non-video:", errorText);
+  if (!response.ok || !contentType.startsWith("video")) {
+    const errorText = await response.text();
+    console.error("Zoho returned non-image:", errorText);
     return NextResponse.json(
       { error: "The requested resource isn't a valid video" },
       { status: 400 }
     );
   }
 
-  const responseHeaders = new Headers({
-    "Content-Type": contentType,
-    "Content-Length": contentLength || "0",
-    "Cache-Control": "public, max-age=86400",
-    "Content-Disposition": "inline",
-  });
-
-  const buffer = Buffer.from(await zohoRes.arrayBuffer());
-
-  return new NextResponse(buffer, {
-    status: 200,
-    headers: responseHeaders,
+  const arrayBuffer = await response.arrayBuffer();
+  return new NextResponse(Buffer.from(arrayBuffer), {
+    headers: {
+      "Content-Type": contentType,
+      "Content-Disposition": "inline",
+      "Cache-Control": "public, max-age=86400",
+    },
   });
 }
