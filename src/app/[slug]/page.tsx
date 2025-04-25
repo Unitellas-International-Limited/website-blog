@@ -64,28 +64,31 @@ export default function BlogPostPage() {
           <div className="max-w-screen-xl space-y-9 mx-auto p-5">
             {/* top */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <p className="text-md font-light mx-auto mt-7">
+              <p
+                className={`text-md font-light mx-auto mt-7 ${
+                  post.Blog_Video === "" ? "col-span-2" : ""
+                }`}
+              >
                 {post.Blog_Content_Paragraph_1}
               </p>
-              <div className="relative w-full md:h-full">
-                {post.Blog_Video ? (
+              {post.Blog_Video !== "" && (
+                <div className="relative w-full md:h-full rounded_lg">
                   <video
                     className="w-full h-full object-cover rounded-lg"
                     autoPlay
-                    muted
                     playsInline
-                    preload="metadata"
+                    muted
+                    loop
+                    preload="auto"
                   >
                     <source
-                      src={`/api/display-video?video=${encodeURIComponent(
-                        post.Blog_Video
-                      )}`}
+                      src={`/assets/videos/${post.Blog_Video}`}
                       type="video/mp4"
                     />
                     Your browser does not support the video tag.
                   </video>
-                ) : null}
-              </div>
+                </div>
+              )}
             </div>
 
             {/* middle */}
