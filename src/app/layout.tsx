@@ -1,11 +1,5 @@
-import type { Metadata } from "next";
 import "./globals.css";
 import { GoogleTagManager } from "@next/third-parties/google";
-
-export const metadata: Metadata = {
-  title: "Blog | Unitellas International Limited",
-  description: "The Offical Unitellas Blog",
-};
 
 export default function RootLayout({
   children,

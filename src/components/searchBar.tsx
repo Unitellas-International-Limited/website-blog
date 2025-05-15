@@ -8,7 +8,7 @@ interface SearchBarProps {
 
 const SearchBar: React.FC<SearchBarProps> = ({ value, onChange }) => {
   return (
-    <div className="flex justify-center">
+    <section className="flex justify-center">
       <div className="w-full max-w-[80%] rounded-xl p-3 text-sm flex gap-4 my-4 shadow-sm hover:shadow-[#3caaee]">
         <Search size={20} />
         <input
@@ -19,7 +19,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ value, onChange }) => {
           onChange={onChange}
         />
       </div>
-    </div>
+    </section>
   );
 };
 
