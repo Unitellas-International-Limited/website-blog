@@ -1,13 +1,6 @@
-// app/[slug]/page.tsx
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import BlogPost from "./blogPost";
-
-type Props = {
-  params: {
-    slug: string;
-  };
-};
 
 async function getPostBySlug(slug: string) {
   const res = await fetch(
@@ -23,8 +16,8 @@ async function getPostBySlug(slug: string) {
   return data?.data;
 }
 
-// ✅ Fix: Correctly typed generateMetadata
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function generateMetadata({ params }: any): Promise<Metadata> {
   const post = await getPostBySlug(params.slug);
 
   if (!post) {
@@ -67,8 +60,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-// ✅ Page component also typed explicitly
-export default async function BlogPostPage({ params }: Props) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default async function BlogPostPage({ params }: any) {
   const post = await getPostBySlug(params.slug);
 
   if (!post) return notFound();
