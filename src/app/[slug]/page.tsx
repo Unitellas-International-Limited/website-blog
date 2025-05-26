@@ -2,6 +2,10 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import BlogPost from "./blogPost";
 
+type Props = {
+  params: { slug: string };
+};
+
 const getPostBySlug = async (slug: string) => {
   const res = await fetch(
     `https://blog.unitellas.com.ng/api/fetch-post-by-slug?slug=${slug}`,
@@ -16,9 +20,8 @@ const getPostBySlug = async (slug: string) => {
 
 export async function generateMetadata({
   params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
+}: Props): // _parent: ResolvingMetadata
+Promise<Metadata> {
   const post = await getPostBySlug(params.slug);
 
   if (!post) {
@@ -33,7 +36,9 @@ export async function generateMetadata({
     description: post.Blog_Content_Paragraph_1.slice(0, 160),
     openGraph: {
       title: post.Blog_Title,
-      description: post.Blog_Content_Paragraph_1.slice(0, 160),
+      description:
+        post.Blog_Content_Paragraph_1?.slice(0, 160) ??
+        "Read the latest news on Unitellas Blog.",
       images: [
         {
           url: `https://blog.unitellas.com.ng/api/display-image?image=${encodeURIComponent(
@@ -56,14 +61,11 @@ export async function generateMetadata({
         )}`,
       ],
     },
+    robots: { index: true },
   };
 }
 
-export default async function BlogPostPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default async function BlogPostPage({ params }: Props) {
   const post = await getPostBySlug(params.slug);
   if (!post) return notFound();
 
