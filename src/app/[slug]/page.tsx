@@ -3,10 +3,12 @@ import { notFound } from "next/navigation";
 import BlogPost from "./blogPost";
 
 type Props = {
-  params: { slug: string };
+  params: {
+    slug: string;
+  };
 };
 
-const getPostBySlug = async (slug: string) => {
+async function getPostBySlug(slug: string) {
   const res = await fetch(
     `https://blog.unitellas.com.ng/api/fetch-post-by-slug?slug=${slug}`,
     {
@@ -16,12 +18,9 @@ const getPostBySlug = async (slug: string) => {
   if (!res.ok) return null;
   const data = await res.json();
   return data?.data;
-};
+}
 
-export async function generateMetadata({
-  params,
-}: Props): // _parent: ResolvingMetadata
-Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = await getPostBySlug(params.slug);
 
   if (!post) {
