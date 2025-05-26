@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@next/third-parties": "^15.3.2",
+    "classnames": "^2.5.1",
     "lucide-react": "^0.488.0",
+    "motion": "^12.12.2",
     "next": "^15.3.2",
     "postcss": "^8.5.3",
     "react": "^19.0.0",
