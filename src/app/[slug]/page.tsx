@@ -1,12 +1,13 @@
+// app/[slug]/page.tsx
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import BlogPost from "./blogPost";
 
-type Props = {
+interface PageParams {
   params: {
     slug: string;
   };
-};
+}
 
 async function getPostBySlug(slug: string) {
   const res = await fetch(
@@ -15,12 +16,17 @@ async function getPostBySlug(slug: string) {
       next: { revalidate: 60 },
     }
   );
+
   if (!res.ok) return null;
+
   const data = await res.json();
   return data?.data;
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+// ✅ generateMetadata receives a plain object with { params }
+export async function generateMetadata({
+  params,
+}: PageParams): Promise<Metadata> {
   const post = await getPostBySlug(params.slug);
 
   if (!post) {
@@ -64,8 +70,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function BlogPostPage({ params }: Props) {
+// ✅ The actual page component
+export default async function BlogPostPage({ params }: PageParams) {
   const post = await getPostBySlug(params.slug);
+
   if (!post) return notFound();
 
   return <BlogPost post={post} />;
