@@ -3,10 +3,8 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import BlogPost from "./blogPost";
 
-interface PageParams {
-  params: {
-    slug: string;
-  };
+interface Params {
+  slug: string;
 }
 
 async function getPostBySlug(slug: string) {
@@ -23,10 +21,12 @@ async function getPostBySlug(slug: string) {
   return data?.data;
 }
 
-// ✅ generateMetadata receives a plain object with { params }
+// Fix the parameter type here — destructure params with type
 export async function generateMetadata({
   params,
-}: PageParams): Promise<Metadata> {
+}: {
+  params: Params;
+}): Promise<Metadata> {
   const post = await getPostBySlug(params.slug);
 
   if (!post) {
@@ -70,8 +70,8 @@ export async function generateMetadata({
   };
 }
 
-// ✅ The actual page component
-export default async function BlogPostPage({ params }: PageParams) {
+// For the page component — type the params properly
+export default async function BlogPostPage({ params }: { params: Params }) {
   const post = await getPostBySlug(params.slug);
 
   if (!post) return notFound();
