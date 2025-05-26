@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import BaseModal from "./baseModal";
+import Image from "next/image";
+import Icon from "../../public/assets/images/unitellasicon.png";
 
 export default function Nav() {
   const [sideBarDisplay, setSideBarDisplay] = useState(false);
@@ -32,7 +34,11 @@ export default function Nav() {
 
   return (
     <>
-      <nav className="md:hidden bg-gray-900/90 flex items-center justify-between px-4">
+      <nav className="md:hidden bg-gray-900/90 flex items-center justify-between px-4 py-1">
+        <div className="relative w-18 h-16">
+          <Image src={Icon} alt="Unitellas Icon" fill />
+        </div>
+
         <Menu
           className="cursor-pointer ms-auto text-white w-8 h-8 my-3"
           onClick={() => {
@@ -72,7 +78,11 @@ export default function Nav() {
         </BaseModal>
       </nav>
 
-      <nav className="hidden md:block bg-gray-900/90">
+      <nav className="hidden px-4 py-1 md:flex bg-gray-900/90 justify-between items-center">
+        <div className="relative w-18 h-16">
+          <Image src={Icon} alt="Unitellas Icon" fill />
+        </div>
+
         <ul className="flex h-20 items-center justify-end gap-8 font-medium px-3 py-4 capitalize text-white">
           <li className="mr-auto"></li>
           {navLinks.map((link) => (
