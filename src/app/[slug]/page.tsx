@@ -3,9 +3,11 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import BlogPost from "./blogPost";
 
-interface Params {
-  slug: string;
-}
+type Props = {
+  params: {
+    slug: string;
+  };
+};
 
 async function getPostBySlug(slug: string) {
   const res = await fetch(
@@ -21,12 +23,8 @@ async function getPostBySlug(slug: string) {
   return data?.data;
 }
 
-// Fix the parameter type here — destructure params with type
-export async function generateMetadata({
-  params,
-}: {
-  params: Params;
-}): Promise<Metadata> {
+// ✅ Fix: Correctly typed generateMetadata
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = await getPostBySlug(params.slug);
 
   if (!post) {
@@ -36,19 +34,22 @@ export async function generateMetadata({
     };
   }
 
+  const description =
+    post.Blog_Content_Paragraph_1?.slice(0, 160) ??
+    "Read the latest from Unitellas Blog";
+  const imageUrl = `https://blog.unitellas.com.ng/api/display-image?image=${encodeURIComponent(
+    post.Blog_Image
+  )}`;
+
   return {
     title: `${post.Blog_Title} | Unitellas Blog`,
-    description: post.Blog_Content_Paragraph_1.slice(0, 160),
+    description,
     openGraph: {
       title: post.Blog_Title,
-      description:
-        post.Blog_Content_Paragraph_1?.slice(0, 160) ??
-        "Read the latest news on Unitellas Blog.",
+      description,
       images: [
         {
-          url: `https://blog.unitellas.com.ng/api/display-image?image=${encodeURIComponent(
-            post.Blog_Image
-          )}`,
+          url: imageUrl,
           width: 1200,
           height: 630,
           alt: post.Blog_Title,
@@ -59,19 +60,15 @@ export async function generateMetadata({
     twitter: {
       card: "summary_large_image",
       title: post.Blog_Title,
-      description: post.Blog_Content_Paragraph_1.slice(0, 160),
-      images: [
-        `https://blog.unitellas.com.ng/api/display-image?image=${encodeURIComponent(
-          post.Blog_Image
-        )}`,
-      ],
+      description,
+      images: [imageUrl],
     },
     robots: { index: true },
   };
 }
 
-// For the page component — type the params properly
-export default async function BlogPostPage({ params }: { params: Params }) {
+// ✅ Page component also typed explicitly
+export default async function BlogPostPage({ params }: Props) {
   const post = await getPostBySlug(params.slug);
 
   if (!post) return notFound();
