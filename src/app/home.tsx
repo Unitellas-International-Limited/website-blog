@@ -129,9 +129,9 @@ const Home: React.FC = () => {
                       width={40}
                       height={40}
                     />
-                    <p className="ml-auto mx-1 text-sm font-medium">
+                    {/* <p className="ml-auto mx-1 text-sm font-medium">
                       By {post.Author}
-                    </p>
+                    </p> */}
                   </div>
                 </div>
               </Link>
