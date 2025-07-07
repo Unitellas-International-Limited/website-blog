@@ -17,10 +17,7 @@ interface BlogPost {
 export default function BlogPost({ post }: { post: BlogPost }) {
   return (
     <section className="w-full">
-      <PageHeader
-        title={post.Blog_Title}
-        subtitles={[`Author: ${post.Author}`]}
-      />
+      <PageHeader title={post.Blog_Title} subtitles={[]} />
       <p className="text-right text-xs font-bold px-3 py-1">
         Published on {post.Date_Published}
       </p>
@@ -28,7 +25,7 @@ export default function BlogPost({ post }: { post: BlogPost }) {
       <div className="max-w-screen-xl space-y-9 mx-auto p-5">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <p
-            className={`text-md font-light mx-auto mt-7 ${
+            className={`text-md font-light mx-auto mt-7 [&_a]:font-semibold [&_a]:block [&_a]:text-gray-800 [&_a]:hover:underline ${
               post.Blog_Video === "" ? "col-span-2" : ""
             }`}
           >
@@ -66,14 +63,16 @@ export default function BlogPost({ post }: { post: BlogPost }) {
               className="rounded-lg"
             />
           </div>
-          <p className="text-md font-light mx-auto mt-7">
-            {post.Blog_Content_Paragraph_2}
-          </p>
+          <div
+            className="text-md font-light mx-auto mt-7 [&_a]:font-semibold [&_a]:block [&_a]:text-gray-800 [&_a]:hover:underline "
+            dangerouslySetInnerHTML={{ __html: post.Blog_Content_Paragraph_2 }}
+          />
         </div>
 
-        <p className="text-md font-light mx-auto mt-7">
-          {post.Blog_Content_Paragraph_3}
-        </p>
+        <div
+          className="text-md font-light mx-auto mt-7 [&_a]:font-semibold [&_a]:block [&_a]:text-gray-800 [&_a]:hover:underline "
+          dangerouslySetInnerHTML={{ __html: post.Blog_Content_Paragraph_3 }}
+        />
       </div>
     </section>
   );
