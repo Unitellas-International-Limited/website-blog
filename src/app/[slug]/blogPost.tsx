@@ -24,13 +24,12 @@ export default function BlogPost({ post }: { post: BlogPost }) {
 
       <div className="max-w-screen-xl space-y-9 mx-auto p-5">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <p
-            className={`text-md font-light mx-auto mt-7 [&_a]:font-semibold [&_a]:block [&_a]:text-gray-800 [&_a]:hover:underline ${
+          <div
+            className={`text-md font-normal mx-auto mt-7 [&_a]:font-semibold [&_a]:block [&_a]:text-gray-800 [&_a]:hover:underline ${
               post.Blog_Video === "" ? "col-span-2" : ""
             }`}
-          >
-            {post.Blog_Content_Paragraph_1}
-          </p>
+            dangerouslySetInnerHTML={{ __html: post.Blog_Content_Paragraph_1 }}
+          />
           {post.Blog_Video !== "" && (
             <div className="relative w-full md:h-full rounded-lg">
               <video
@@ -51,7 +50,7 @@ export default function BlogPost({ post }: { post: BlogPost }) {
           )}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 justify-center items-center">
           <div className="relative w-full h-72 md:h-full">
             <Image
               src={`/api/display-image?image=${encodeURIComponent(
@@ -64,13 +63,13 @@ export default function BlogPost({ post }: { post: BlogPost }) {
             />
           </div>
           <div
-            className="text-md font-light mx-auto mt-7 [&_a]:font-semibold [&_a]:block [&_a]:text-gray-800 [&_a]:hover:underline "
+            className="text-md font-normal mx-auto [&_a]:font-semibold [&_a]:block [&_a]:text-gray-800 [&_a]:hover:underline "
             dangerouslySetInnerHTML={{ __html: post.Blog_Content_Paragraph_2 }}
           />
         </div>
 
         <div
-          className="text-md font-light mx-auto mt-7 [&_a]:font-semibold [&_a]:block [&_a]:text-gray-800 [&_a]:hover:underline "
+          className="text-md font-normal mx-auto mt-7 [&_a]:font-semibold [&_a]:block [&_a]:text-gray-800 [&_a]:hover:underline "
           dangerouslySetInnerHTML={{ __html: post.Blog_Content_Paragraph_3 }}
         />
       </div>
