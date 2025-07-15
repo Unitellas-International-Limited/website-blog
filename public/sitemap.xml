@@ -5,4 +5,14 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://blog.unitellas.com.ng/how-unitellas-cloud-is-powering-nigerias-digital-future</loc>
+    <changefreq>never</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://blog.unitellas.com.ng/unitellas-leads-cloud-innovation-in-nigeria-with-homegrown-edge-infrastructure</loc>
+    <changefreq>never</changefreq>
+    <priority>1.0</priority>
+  </url>
 </urlset>
