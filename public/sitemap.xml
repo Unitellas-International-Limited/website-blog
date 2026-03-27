@@ -20,4 +20,9 @@
     <changefreq>never</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://blog.unitellas.com.ng/nigerias-digital-vulnerability-how-unitellas-points-the-vision-forward</loc>
+    <changefreq>never</changefreq>
+    <priority>1.0</priority>
+  </url>
 </urlset>
