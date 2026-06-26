@@ -14,7 +14,7 @@ export default function Document() {
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap"
           rel="stylesheet"
         />
 
@@ -76,7 +76,7 @@ export default function Document() {
         />
         <meta
           property="og:description"
-          content="Insights and updates from Africa’s first hyperscale edge cloud platform."
+          content="Insights and updates from Africa's first hyperscale edge cloud platform."
         />
         <meta
           property="og:image"
@@ -96,7 +96,7 @@ export default function Document() {
         <meta name="twitter:creator" content="@Unitellasil" />
         <meta
           name="twitter:title"
-          content="Unitellas Blog - Africa’s Edge Cloud Voice"
+          content="Unitellas Blog - Africa's Edge Cloud Voice"
         />
         <meta
           name="twitter:description"
