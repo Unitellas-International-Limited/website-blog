@@ -43,8 +43,8 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
       images: [
         {
           url: imageUrl,
-          width: 1200,
-          height: 630,
+          width: 100%,
+          height: auto,
           alt: post.Blog_Title,
         },
       ],
