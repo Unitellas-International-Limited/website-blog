@@ -5,12 +5,12 @@
 }
 
 /*Fonts*/
-/* @font-face {
+@font-face {
   font-family: "Mongoose";
   font-style: normal;
   src: url("/assets/fonts/mongoose-regular.otf") format("opentype");
   font-display: swap;
-} */
+}
 
 /* .font-main {
   font-family: "Mongoose", sans-serif;
